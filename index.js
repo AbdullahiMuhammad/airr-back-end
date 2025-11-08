@@ -16,32 +16,15 @@ import agencyRoutes from "./routes/agencyRoutes.js";
 
 const app = express();
 connectDB();
+
+app.use(cors({
+  origin: 'https://automatic-incident-reporting-ytdj.vercel.app',  // Allow your frontend origin
+  credentials: true,  // Allow cookies (if you need them for auth)
+}));
+
+
+
 app.use(express.json());
-// Define allowed origins
-const allowedOrigins = [
-  'https://automatic-incident-reporting-ytdj.vercel.app', // Your frontend domain
-];
-
-// CORS configuration
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);  // Allow the request
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allow specific HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'],  // Allow specific headers
-  credentials: true, // If you want to allow cookies or authentication headers
-};
-
-// Use the CORS middleware
-app.use(cors(corsOptions));
-
-
-
-
 
 app.use('/api/auth', authRoute);
 app.use('/api/user', userRouter);
