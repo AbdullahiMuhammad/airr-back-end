@@ -30,7 +30,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
   credentials: true,  // Allow cookies (if needed)
 };
-
+app.use(cors(corsOptions))
 
 
 
