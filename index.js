@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from 'express';
 import cors from 'cors';
-import connectDB from './db/db.js'
+import connectDB from './db/db.js';
 import authRoute from './routes/authRouter.js';
 import userRouter from "./routes/userRouter.js";
 import organizationRoutes from './routes/organizationRoutes.js';
@@ -16,12 +16,32 @@ import agencyRoutes from "./routes/agencyRoutes.js";
 
 const app = express();
 connectDB();
-
-app.use(cors({
-  origin: 'https://airr-back-end.vercel.app', // your frontend URL
-  credentials: true // if sending cookies
-}));
 app.use(express.json());
+// Define allowed origins
+const allowedOrigins = [
+  'https://automatic-incident-reporting-ytdj.vercel.app', // Your frontend domain
+];
+
+// CORS configuration
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);  // Allow the request
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allow specific HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Allow specific headers
+  credentials: true, // If you want to allow cookies or authentication headers
+};
+
+// Use the CORS middleware
+app.use(cors(corsOptions));
+
+
+
+
 
 app.use('/api/auth', authRoute);
 app.use('/api/user', userRouter);
@@ -38,5 +58,4 @@ app.get('/', (req, res) => {
   res.status(200).json({ success: true });
 });
 
-// Export the app for Vercel's serverless functions
 export default app;
