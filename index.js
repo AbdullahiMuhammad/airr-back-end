@@ -19,7 +19,7 @@ connectDB();
 app.use(express.json());
 // Define allowed origins
 const allowedOrigins = [
-  'https://automatic-incident-reporting-ytdj.vercel.app', // Your frontend domain
+  'https://https://airr-front.vercel.app', // Your frontend domain
 ];
 
 // CORS configuration
