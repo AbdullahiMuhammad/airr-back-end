@@ -18,7 +18,7 @@ const app = express();
 connectDB();
 
 app.use(cors({
-  origin: 'https://airr-front.vercel.app/login',  // Allow your frontend origin
+  origin: 'https://airr-front.vercel.app',  // Allow your frontend origin
   credentials: true,  // Allow cookies (if you need them for auth)
 }));
 
